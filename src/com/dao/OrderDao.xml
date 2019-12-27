@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.OrderDao">
+	<resultMap type="orders" id="finderorder">
+		<id column="id" property="id"/>
+		<result column="ordername" property="ordername"/>
+		<result column="orderremark" property="orderremark"/>
+		<collection property="orderdetails" ofType="orderdetail">
+			<id column="oid" property="id"/>
+			<result column="orderdetail" property="orderdetail"/>
+			<result column="ordernum" property="ordernum" />
+			
+			<!-- 一对多使用collection 类型是ofType-->
+			<collection property="" ofType="">
+				<id/>
+				<result/>
+				<!-- 一对一使用association 类型是JavaType-->
+				<association property="" javaType="">
+					<id/>
+					<result/>
+				
+				</association>
+			
+			</collection>
+			
+		</collection>
+			
+	</resultMap>
+	<!-- type结果返回类型 -->
+	<resultMap type="" id="">
+		<!--id 主查询的唯一标识 ，如果有两个，就配置两个id
+			column 数据表对应的字段
+			property:数据表对应属性
+		-->
+		<id column="" property=""/>
+		<result column="" property=""/>
+		<!-- 一对一使用association property对应的类属性，javaType对应类的权限地址-->
+		<association property="" javaType="">
+		<!-- id对应该类的唯一标识，
+			column 数据表对应的字段
+			property:数据表对应属性
+			 -->
+			<id column="" property=""/>
+		</association>
+		<!--一对多使用collection  -->
+		<collection property="" ofType="">
+		
+		
+		</collection>
+	</resultMap>
+	<!-- 查询所有订单及明细信息 -->
+	<select id="findAllOrder" resultMap="finderorder">
+		select orders.*,orderdetail.id oid,orderdetail.orderdetail,orderdetail.ordernum 
+			from orders, orderdetail where orders.id=orderdetail.order_id
+	</select>
+
+</mapper>
